@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+		<title>数值的扩展</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			html,body{
+				height:100%;
+				width:100%;
+			}
+			html{
+				font-size:20px;
+			}
+			main{
+				width:30rem;
+				height:auto;
+				box-shadow:0 0 0.5rem 0.5rem #666;
+				margin:2rem autp;
+				padding:1.5rem;
+				border:0.1rem solid black;
+			}
+			h3{
+				height:2rem;
+				line-height:2rem;
+				text-align:center;
+				background-color:black;
+				color:white;
+				margin:0.5rem 0;
+			}
+			ul{
+				list-style-position:inside;
+				padding:1rem;
+			}
+			ul li{
+				margin:0.5rem 0;
+			}
+		</style>
+		<style>
+			@media (max-width:450px) {
+				main{
+					width:auto;
+					height:auto;
+					padding:0;
+					margin:0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h3>二进制和八进制表示法 </h3>
+				<ul>
+					<li>ES6 提供了二进制和八进制数值的新的写法，分别用前缀0b（或0B）和0o（或0O）表示。</li>
+					<li>从 ES5 开始，在严格模式之中，八进制就不再允许使用前缀0表示，ES6 进一步明确，要使用前缀0o表示。</li>
+					<li>如果要将0b和0o前缀的字符串数值转为十进制，要使用Number方法。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Number.isFinite(), Number.isNaN() </h3>
+				<ul>
+					<li>ES6 在Number对象上，新提供了Number.isFinite()和Number.isNaN()两个方法。</li>
+					<li>Number.isFinite()用来检查一个数值是否为有限的（finite），即不是Infinity。注意，如果参数类型不是数值，Number.isFinite一律返回false。</li>
+					<li>Number.isNaN()用来检查一个值是否为NaN。如果参数类型不是NaN，Number.isNaN一律返回false。</li>
+					<li>它们与传统的全局方法isFinite()和isNaN()的区别在于，传统方法先调用Number()将非数值的值转为数值，再进行判断，而这两个新方法只对数值有效，Number.isFinite()对于非数值一律返回false, Number.isNaN()只有对于NaN才返回true，非NaN一律返回false。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Number.parseInt(), Number.parseFloat() </h3>
+				<ul>
+					<li>ES6 将全局方法parseInt()和parseFloat()，移植到Number对象上面，行为完全保持不变。</li>
+					<li>这样做的目的，是逐步减少全局性方法，使得语言逐步模块化。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Number.isInteger() </h3>
+				<ul>
+					<li>Number.isInteger()用来判断一个数值是否为整数。</li>
+					<li>JavaScript 内部，整数和浮点数采用的是同样的储存方法，所以 25 和 25.0 被视为同一个值。如果参数不是数值，Number.isInteger返回false。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Number.EPSILON</h3>
+				<ul>
+					<li>ES6 在Number对象上面，新增一个极小的常量Number.EPSILON。根据规格，它表示 1 与大于 1 的最小浮点数之间的差。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>安全整数和 Number.isSafeInteger()</h3>
+				<ul>
+					<li>JavaScript 能够准确表示的整数范围在-2^53到2^53之间（不含两个端点），超过这个范围，无法精确表示这个值。</li>
+					<li>ES6 引入了Number.MAX_SAFE_INTEGER和Number.MIN_SAFE_INTEGER这两个常量，用来表示这个范围的上下限。</li>
+					<li>Number.isSafeInteger()则是用来判断一个整数是否落在这个范围之内。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Math 对象的扩展</h3>
+				<ul>
+					<li>ES6 在 Math 对象上新增了 17 个与数学相关的方法。所有这些方法都是静态方法，只能在 Math 对象上调用。</li>
+					<li>Math.trunc方法用于去除一个数的小数部分，返回整数部分。对于非数值，Math.trunc内部使用Number方法将其先转为数值。对于空值和无法截取整数的值，返回NaN。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Math.sign() </h3>
+				<ul>
+					<li>Math.sign方法用来判断一个数到底是正数、负数、还是零。对于非数值，会先将其转换为数值。</li>
+					<li>它会返回五种值。参数为正数，返回+1；参数为负数，返回-1；参数为 0，返回0；参数为-0，返回-0;其他值，返回NaN。</li>
+					<li>如果参数是非数值，会自动转为数值。对于那些无法转为数值的值，会返回NaN。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Math.cbrt()</h3>
+				<ul>
+					<li>Math.cbrt()方法用于计算一个数的立方根。</li>
+					<li>对于非数值，Math.cbrt()方法内部也是先使用Number()方法将其转为数值。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Math.clz32()</h3>
+				<ul>
+					<li>Math.clz32()方法将参数转为 32 位无符号整数的形式，然后返回这个 32 位值里面有多少个前导 0。</li>
+					<li>对于小数，Math.clz32方法只考虑整数部分。对于空值或其他类型的值，Math.clz32方法会将它们先转为数值，然后再计算。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Math.imul()</h3>
+				<ul>
+					<li>Math.imul方法返回两个数以 32 位带符号整数形式相乘的结果，返回的也是一个 32 位的带符号整数。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Math.fround()</h3>
+				<ul>
+					<li>Math.fround方法返回一个数的32位单精度浮点数形式。</li>
+					<li>对于32位单精度格式来说，数值精度是24个二进制位（1 位隐藏位与 23 位有效位），所以对于 -224 至 224 之间的整数（不含两个端点），返回结果与参数本身一致。如果参数的绝对值大于 224，返回的结果便开始丢失精度。</li>
+					<li>Math.fround方法的主要作用，是将64位双精度浮点数转为32位单精度浮点数。如果小数的精度超过24个二进制位，返回值就会不同于原值，否则返回值不变（即与64位双精度值一致）。</li>
+					<li>对于 NaN 和 Infinity，此方法返回原值。对于其它类型的非数值，Math.fround 方法会先将其转为数值，再返回单精度浮点数。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Math.hypot()</h3>
+				<ul>
+					<li>Math.hypot方法返回所有参数的平方和的平方根。</li>
+					<li>如果参数不是数值，Math.hypot方法会将其转为数值。只要有一个参数无法转为数值，就会返回 NaN。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>对数方法 ,ES6 新增了 4 个对数相关方法。</h3>
+				<ul>
+					<li>Math.expm1(x)返回 ex - 1，即Math.exp(x) - 1。</li>
+					<li>Math.log1p(x)方法返回1 + x的自然对数，即Math.log(1 + x)。如果x小于-1，返回NaN。</li>
+					<li>Math.log10(x)返回以 10 为底的x的对数。如果x小于 0，则返回 NaN。</li>
+					<li>Math.log2(x)返回以 2 为底的x的对数。如果x小于 0，则返回 NaN。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>双曲函数方法 ,ES6 新增了 6 个双曲函数方法。</h3>
+				<ul>
+					<li>Math.sinh(x) 返回x的双曲正弦（hyperbolic sine）</li>
+					<li>Math.cosh(x) 返回x的双曲余弦（hyperbolic cosine）</li>
+					<li>Math.tanh(x) 返回x的双曲正切（hyperbolic tangent）</li>
+					<li>Math.asinh(x) 返回x的反双曲正弦（inverse hyperbolic sine）</li>
+					<li>Math.acosh(x) 返回x的反双曲余弦（inverse hyperbolic cosine）</li>
+					<li>Math.atanh(x) 返回x的反双曲正切（inverse hyperbolic tangent）</li>
+				</ul>
+			</section>
+			<section>
+				<h3>指数运算符,ES2016 新增了一个指数运算符（**）。</h3>
+				<ul>
+					<li>这个运算符的一个特点是右结合，而不是常见的左结合。多个指数运算符连用时，是从最右边开始计算的。2 ** 2 // 4</li>
+					<li>指数运算符可以与等号结合，形成一个新的赋值运算符（**=）。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>BigInt 数据类型 </h3>
+				<ul>
+					<li>JavaScript 所有数字都保存成 64 位浮点数，这给数值的表示带来了两大限制。一是数值的精度只能到 53 个二进制位（相当于 16 个十进制位），大于这个范围的整数，JavaScript 是无法精确表示的，这使得 JavaScript 不适合进行科学和金融方面的精确计算。二是大于或等于2的1024次方的数值，JavaScript 无法表示，会返回Infinity。</li>
+					<li>ES2020 引入了一种新的数据类型 BigInt（大整数），来解决这个问题。BigInt 只用来表示整数，没有位数的限制，任何位数的整数都可以精确表示。</li>
+					<li>为了与 Number 类型区别，BigInt 类型的数据必须添加后缀n。BigInt 同样可以使用各种进制表示，都要加上后缀n。BigInt 与普通整数是两种值，它们之间并不相等。typeof运算符对于 BigInt 类型的数据返回bigint。BigInt 可以使用负号（-），但是不能使用正号（+），因为会与 asm.js 冲突。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>BigInt 对象</h3>
+				<ul>
+					<li>JavaScript 原生提供BigInt对象，可以用作构造函数生成 BigInt 类型的数值。转换规则基本与Number()一致，将其他类型的值转为 BigInt。</li>
+					<li>BigInt()构造函数必须有参数，而且参数必须可以正常转为数值,参数如果是小数，也会报错。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>数学运算</h3>
+				<ul>
+					<li>数学运算方面，BigInt 类型的+、-、*和**这四个二元运算符，与 Number 类型的行为一致。除法运算/会舍去小数部分，返回一个整数。</li>
+					<li>BigInt 对应的布尔值，与 Number 类型一致，即0n会转为false，其他值转为true。</li>
+				</ul>
+			</section>
+		</main>
+	</body>
+</html>

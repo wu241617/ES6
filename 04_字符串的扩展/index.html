@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+		<title>字符串的扩展</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			html,body{
+				height:100%;
+				width:100%;
+			}
+			html{
+				font-size:20px;
+			}
+			main{
+				font-size:0.8rem;
+				width:30rem;
+				height:auto;
+				margin:2rem auto;
+				padding:1.5rem;
+				border:0.1rem solid black;
+			    box-shadow:0 0 0.5rem 0.5rem #666;
+			}
+			h3{
+				height:2rem;
+				line-height:2rem;
+				text-align:center;
+				margin:0.5rem 0;
+				background-color:black;
+				color:white;
+			}
+			ul{
+				list-style-position:inside;
+				padding:1rem;
+			}
+			ul li{
+				margin:0.5rem 0;
+			}
+		</style>
+		<style>
+			main{
+				height:auto;
+				width:auto;
+				margin:0;
+				padding:0;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h3>字符的Unicode表示法</h3>
+				<ul>
+					<li>ES6 加强了对 Unicode 的支持，允许采用\uxxxx形式表示一个字符，其中xxxx表示字符的 Unicode 码点。"\u0061" // "a";但是，这种表示法只限于码点在\u0000~\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表示。"\uD842\uDFB7" // "𠮷"</li>
+					<li>ES6 对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符。"\u{20BB7}" // "𠮷";大括号表示法与四字节的 UTF-16 编码是等价的。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>字符串的遍历器接口</h3>
+				<ul>
+					<li>ES6 为字符串添加了遍历器接口，使得字符串可以被for...of循环遍历。</li>
+					<li>
+<pre>
+	for (let codePoint of 'foo') {
+	  console.log(codePoint)
+	}
+	// "f"
+	// "o"
+	// "o"
+</pre>
+					</li>
+					<li>除了遍历字符串，这个遍历器最大的优点是可以识别大于0xFFFF的码点，传统的for循环无法识别这样的码点。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>直接输入U+2028和U+2029</h3>
+				<ul>
+					<li>JavaScript 字符串允许直接输入字符，以及输入字符的转义形式。举例来说，“中”的 Unicode 码点是 U+4e2d，你可以直接在字符串里面输入这个汉字，也可以输入它的转义形式\u4e2d，两者是等价的</li>
+					<li>但是，JavaScript 规定有5个字符，不能在字符串里面直接使用，只能使用转义形式。U+005C：反斜杠（reverse solidus);U+000D：回车（carriage return）;U+2028：行分隔符（line separator）;U+2029：段分隔符（paragraph separator);U+000A：换行符（line feed）</li>
+				</ul>
+			</section>
+			<section>
+				<h3>JSON.stringify() 的改造</h3>
+				<ul>
+					<li>改变了JSON.stringify()的行为。如果遇到0xD800到0xDFFF之间的单个码点，或者不存在的配对形式，它会返回转义字符串，留给应用自己决定下一步的处理。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>模板字符串</h3>
+				<ul>
+					<li>模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。</li>
+					<li>
+<pre>
+	/ 普通字符串
+	`In JavaScript '\n' is a line-feed.`
+	
+	// 多行字符串
+	`In JavaScript this is
+	 not legal.`
+	
+	console.log(`string text line 1
+	string text line 2`);
+	
+	// 字符串中嵌入变量
+	let name = "Bob", time = "today";
+	`Hello ${name}, how are you ${time}?`
+</pre>
+					</li>
+					<li>上面代码中的模板字符串，都是用反引号表示。如果在模板字符串中需要使用反引号，则前面要用反斜杠转义。</li>
+					<li>所有模板字符串的空格和换行，都是被保留的,如果你不想要这个换行，可以使用trim方法消除它。</li>
+					<li>模板字符串中嵌入变量，需要将变量名写在${}之中。大括号内部可以放入任意的 JavaScript 表达式，可以进行运算，以及引用对象属性。模板字符串之中还能调用函数。如果大括号中的值不是字符串，将按照一般的规则转为字符串。比如，大括号中是一个对象，将默认调用对象的toString方法。如果大括号内部是一个字符串，将会原样输出。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>模板编译</h3>
+				<ul>
+					<li>通过模板字符串，生成正式模板</li>
+					<li>
+<pre>
+	function compile(template){
+	  const evalExpr = /<%=(.+?)%>/g;
+	  const expr = /<%([\s\S]+?)%>/g;
+	
+	  template = template
+	    .replace(evalExpr, '`); \n  echo( $1 ); \n  echo(`')
+	    .replace(expr, '`); \n $1 \n  echo(`');
+	
+	  template = 'echo(`' + template + '`);';
+	
+	  let script =
+	  `(function parse(data){
+	    let output = "";
+	
+	    function echo(html){
+	      output += html;
+	    }
+	
+	    ${ template }
+	
+	    return output;
+	  })`;
+	
+	  return script;
+	}
+
+</pre>
+					</li>
+					<li>标签模板</li>
+					<li>模板字符串的功能，不仅仅是上面这些。它可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能（tagged template）。alert`hello`// 等同于 alert(['hello'])</li>
+					<li>标签模板其实不是模板，而是函数调用的一种特殊形式。“标签”指的就是函数，紧跟在后面的模板字符串就是它的参数。但是，如果模板字符里面有变量，就不是简单的调用了，而是会将模板字符串先处理成多个参数，再调用函数。</li>
+					<li>“标签模板”的一个重要应用，就是过滤 HTML 字符串，防止用户输入恶意内容。标签模板的另一个应用，就是多语言转换（国际化处理）。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>模板字符串的限制</h3>
+				<ul>
+					<li>前面提到标签模板里面，可以内嵌其他语言。但是，模板字符串默认会将字符串转义，导致无法嵌入其他语言。</li>
+				</ul>
+			</section>
+		</main>
+	</body>
+</html>
