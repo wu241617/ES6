@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			html,body{
+				width:100%;
+				height:100%;
+			}
+			html{
+				font-size:20px;
+			}
+			main,section{
+				display:block;
+			}
+			main{
+				width:30rem;
+				height:auto;
+				margin:2rem auto 0;
+				padding:1rem;
+				box-shadow:0 0 0.5rem 0.5rem #666;
+				border-radius:1rem;
+				font-size:0.7rem;
+				font-family:微软雅黑;
+			}
+			h3{
+				width:100%;
+				height:2rem;
+				display:flex;
+				justify-content:center;
+				align-items:center;
+				background-color:black;
+				color:white;
+				margin:0.5rem 0;
+			}
+			ul{
+				list-style-position:inside;
+				padding:1rem;
+			}
+			ul>li{
+				margin:0.5rem 0;
+			}
+		</style>
+		<style>
+			@media (max-width:450px){
+				main{
+					width:auto;
+					height:auto;
+					padding:0;
+					margin:0;
+				}
+			}
+		</style>
+		<title>ES6——map数据结构</title>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h3>ES6 —— Map</h3>
+				<ul>
+					<li>Map类似于对象，也是键值对的集合，但是键的范围不限于字符串，对象也可以作为键。</li>
+					<li>在ES5或更早之前的JS中的对象，本质上是键值对的集合，但是只能用字符串当作键，使用存在很大的限制。</li>
+					<li>Map函数也接受一个数组进行初始化</li>
+				</ul>
+			</section>
+			<section>
+				<h3>map属性</h3>
+				<ul>
+					<li>size:返回成员总数</li>
+				</ul>
+			</section>
+			<section>
+				<h3>map方法</h3>
+				<ul>
+					<li>set(key,value):设置一个键值对</li>
+					<li>get(key):读取一个键</li>
+					<li>has(key):返回一个布尔值，表示某个键是否在map结构上</li>
+					<li>delete(key):删除某个键</li>
+					<li>clear():清除所有成员</li>
+					<li>forEach():可实现遍历</li>
+				</ul>
+			</section>
+			<section>
+				<h3>map原生提供了三个遍历器</h3>
+				<ul>
+					<li>keys():返回键名的遍历器</li>
+					<li>values():返回键值的遍历器</li>
+					<li>entries():返回所有成员的遍历器</li>
+				</ul>
+			</section>
+		</main>
+		<script>
+			var m = new Map();
+			o = {p: 'hello world'};
+			m.set(o, 'content');
+			console.log(m.get(o)) // content
+			
+			var map = new Map(['name', 'wuhao'],['stuno', '5201314']);
+			map.size // 2
+			map.has('name') // true
+			map.get('name') // wuhao
+		</script>
+	</body>
+</html>

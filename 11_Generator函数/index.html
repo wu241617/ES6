@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			html,body{
+				width:100%;
+				height:100%;
+			}
+			html{
+				font-size:20px;
+			}
+			main,section{
+				display:block;
+			}
+			main{
+				width:30rem;
+				height:auto;
+				margin:2rem auto 0;
+				padding:1rem;
+				box-shadow:0 0 0.5rem 0.5rem #666;
+				border-radius:1rem;
+				font-size:0.7rem;
+				font-family:微软雅黑;
+			}
+			h3{
+				width:100%;
+				height:2rem;
+				text-align:center;
+				line-height:2rem;
+				background-color:black;
+				color:white;
+				margin:0.5rem 0;
+			}
+			ul{
+				list-style-position:inside;
+				padding:1rem;
+			}
+			ul>li{
+				margin:0.5rem 0;
+			}
+		</style>
+		<style>
+			@media (max-width:450px){
+				main{
+					width:auto;
+					height:auto;
+					padding:0;
+					margin:0;
+				}
+			}
+		</style>
+		<title>ES6 —— Generator函数</title>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h3>ES6 —— Generator函数</h3>
+				<ul>
+					<li>所谓Generator,简单说，就是一个内部状态的遍历器，即每调用一个遍历器，内部状态发生一次改变（可以理解为发生某些事件）。ES6引入的Generator函数，作用就是可以完全控制内部状态的变化，依次遍历这些状态。</li>
+					<li>Generator函数就是普通函数，有两个独特的特征。一是funciton 关键字后面跟一个星号；二是，函数体内部使用yield语句定义遍历器的成员，即不同的内部状态（yield在英语里的意思是“产出”）。</li>
+					<li>总结：Generator函数使用了iterator接口，每次调用next方法的返回值，就是一个标准的iterator返回值——有着vlaue和done两个属性的对象。其中，value是yield语句后面那个表达式的值，done是一个布尔值，表示是否遍历结束。</li>
+					<li>yield语句本身没有返回值，或者说总是返回undefined。next方法可以带一个参数，该参数会被当做上一条yield语句的返回值。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>异步操作的应用</h3>
+				<ul>
+					<li>Generator函数的这种暂停执行的效果，意味着可以把异步操作写在yield语句里面，等到调用next方法时再往后执行。这实际上等同于不需要写回调函数了，因为异步操作的后续操作可以放在yield语句下面，反正要等到调用next方法时在执行。所以，Generator函数的一个重要的实际意义就是用来处理异步操作，改写异步函数。</li>
+					<li>for ... of循环可以自动遍历Generator函数，且此时不再需要调用next方法。</li>
+				</ul>
+			</section>
+		</main>
+		<script type="text/javascript">
+			function* helloWorldGenerator(){
+				yield 'hello';
+				yield 'world';
+				return 'ending';
+			}
+			var hw = helloWorldGenerator();
+			// 当调用 Generator 函数的时候，该函数并不执行，而是返回一个遍历器（可以理解成暂停执行）。以后，每次调用这个遍历器的next方法，就从函数体的头部或者上一次停下来的地方开始执行（可以理解为恢复执行），直到遇到下一条yield语句为止。
+			hw.next() // {value: 'hello', done: false}
+			hw.next() // {value: 'world', done: flase}
+			hw.next() // {value: 'ending', done: true}
+			hw.next() // {value: undefined, done: true}
+		</script>
+	</body>
+</html>
