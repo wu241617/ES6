@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			html,body{
+				width:100%;
+				height:100%;
+			}
+			html{
+				font-size:20px;
+			}
+			main,section{
+				display:block;
+			}
+			main{
+				width:30rem;
+				height:auto;
+				padding:1rem;
+				margin:2rem auto 0;
+				box-shadow:0 0 0.5rem 0.5rem #666;
+				border-radius:1rem;
+				font-size:0.7rem;
+				font-family:微软雅黑;
+			}
+			h3{
+				width:100%;
+				height:2rem;
+				display:flex;
+				justify-content:center;
+				align-items:center;
+				background-color:black;
+				color:white;
+				margin:0.5rem 0;
+			}
+			ul{
+				list-style-position:inside;
+				padding:1rem;
+			}
+			ul>li{
+				margin:0.5rem 0;
+			}
+		</style>
+		<style>
+			@media (max-width:450px){
+				main{
+					width:atuo;
+					height:auto;
+					padding:0;
+					margin:0;
+				}
+			}
+		</style>
+		<title>Promise方法</title>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h3>Promise 方法</h3>
+				<ul>
+					<li>Promise.all()方法：</li>
+					<li>Promise.all方法用于将多个异步操作（或Promise对象），包装成一个新的Promise对象。当这些异步操作都完成后，新的Promise对象的状态才会变为fulfilled;只要其中一个异步操作失败，新的Promise对象的状态就会变为rejected。</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Promise.resolve()方法</h3>
+				<ul>
+					<li>Promise.resolve可以把普通对象转换为Promise对象。</li>
+					<li>如果Promise.resolve方法的参数不是具有then方法的对象（又称thenable对象），则返回一个新的Promise对象，且他的状态为resolve</li>
+				</ul>
+			</section>
+			<section>
+				<h3>async 函数</h3>
+				<ul>
+					<li>async 函数是用来取代回调函数的另一种方法。</li>
+					<li>只要函数名之前加上async关键字，就表明该函数内部有异步操作。改异步操作应该返回一个Promise对象，前面用await关键字注明。当函数执行的时候，一旦遇到await就会先返回，等到触发的异步操作完成，再接着执行函数体内后面的语句。</li>
+				</ul>
+			</section>
+		</main>
+		<script type="text/javascript">
+			// 生成一个 Promise 对象的数组
+			var promises = [2, 3, 4, 6, 8, 26].map(function(id){
+				return getJSON("/post"+ id + ",json");
+			});
+			
+			Promise.all(promises).then(function(posts){
+				// ...
+			}).catch(function(reason){
+				// ...
+			})
+			
+			// 将 jQuery 生成的 deferred 对象，转换为一个新的 ES6 的 Promise 对象。
+			var jsPromise = Promise.resolve($.ajax('/whatever.json'));
+			// 会生成一个新的Promise对象，他的状态为fulfilled,所以回调函数会立即执行，Promise.resolve方法的参数就是回调函数的参数。
+			var p = Promise.resolve('hello');
+			p.then(function(s){
+				console.log(s);// hello
+			})
+			
+			// async 和 await
+			function timeout(ms){
+				return new Promise(resolve => {
+					setTimeout(resolve,ms);
+				})
+			}
+			async function value(value){
+				await timeout(50);
+				return value;
+			}
+		</script>
+	</body>
+</html>

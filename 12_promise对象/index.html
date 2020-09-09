@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			html,body{
+				width:100%;
+				height:100%;
+			}
+			html{
+				font-size:20px;
+			}
+			main,section{
+				display:block;
+			}
+			main{
+				width:30rem;
+				height:auto;
+				padding:1rem;
+				margin:2rem auto 0;
+				box-shadow:0 0 0.5rem 0.5rem #666;
+				border-radius:1rem;
+				font-size:0.7rem;
+				font-family:微软雅黑;
+			}
+			h3{
+				width:100%;
+				height:2rem;
+				text-align:center;
+				line-height:2rem;
+				background-color:black;
+				color:white;
+				margin:0.5rem 0;
+			}
+			ul{
+				list-style-position:inside;
+				padding:1rem;
+			}
+			ul>li{
+				margin:0.5rem 0;
+			}
+		</style>
+		<style>
+			@meida (max-width:450px){
+				main{
+					width:auto;
+					height:auto;
+					padding:0;
+					margin:0;
+				}
+			}
+		</style>
+		<title>ES6 —— promise对象</title>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h3>ES6 —— promise 对象</h3>
+				<ul>
+					<li>ES6原生提供Promise对象。所谓Promise对象，就是代表了某个将要发生的事件（通常是一个异步操作）。</li>
+					<li>它的好处在于，有了Promise对象，就可以将异步操作以同步操作的流程表示出来，避免了层层嵌套的回调函数。</li>
+					<li>ES6的Promise对象是一个构造函数，用来生成Promise实例。</li>
+					<li>Promise构造函数接受一个函数作为参数，该函数的两个参数分别为resolve和reject方法。如果异步操作成功,则用resolve方法将Promise对象的状态变为“成功”（即从pending变为resolved）;如果异步操作失败，则用reject方法将状态变为"失败"（即从pending变为rejected）。</li>
+					<li>promise实例生成后，可以用then方法分别指定resolve方法和reject方法的回调函数。</li>
+					<li>链式调用：then方法返回的是一个新的Promise对象，因此可以采用链式写法。</li>
+					<li>catch方法：捕捉错误。catch方法是 then(null,rejection)的别名，用于指定发生错误时的回调函数。</li>
+					<li>Promise对象的错误具有“冒泡”性质，会一直向后传递，直到被捕获为止。</li>
+				</ul>
+			</section>
+		</main>
+		<script type="text/javascript">
+			var promise = new Promise(function(resolve,reject){
+				if(/* 异步操作成功 */){
+					resolve(value);
+				}else{
+					reject(error);
+				}
+			})
+			promise.then(function(value){
+				// success
+			},function(value){
+				// failure
+			})
+		</script>
+	</body>
+</html>
